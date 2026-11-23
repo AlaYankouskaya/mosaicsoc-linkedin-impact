@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MosAIcSOC LinkedIn impact</title>
+<meta name="description" content="How the MosAIcSOC project travelled on LinkedIn in its first two months.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;800&family=Red+Hat+Text:wght@400;500;700&display=swap">
+<style>
+/* VOICE work: a campaign report for the consortium, newspaper-graphics calm
+   IDEA a mosaic, the project's name made literal; every interaction is one tile, laid as the weeks pass
+   PICTURE 572 tiles that fill in post by post as the timeline plays, coloured by who posted
+   COLOUR navy ground in both themes; gold = coordinator, teal = partners, red = outside
+   TYPE Red Hat Display 800 + Red Hat Text
+   LAYOUT finding, live counters and the player on top, mosaic full width; bars beside sources; growth curve beside reach; partners */
+:root{color-scheme:dark;--bg:#0b1433;--panel:#111c44;--line:#26336a;--ink:#f2f4ff;--soft:#b8c0e6;--mute:#8590c2;--bu:#b98212;--pa:#14a9b1;--ex:#e8452c;--dim:#2c3870}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.55 "Red Hat Text",system-ui,sans-serif;overflow-x:clip}
+h1,h2{font-family:"Red Hat Display",system-ui,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,4.4vw,50px);max-width:20ch}
+h2{font-size:clamp(22px,2.6vw,30px);margin-bottom:6px}
+p{margin:0}
+a{color:var(--ink)}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.lede{color:var(--soft);margin-top:12px;max-width:62ch}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5em,1fr));gap:2px;margin-top:26px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi{background:var(--bg);padding:14px 16px}
+.kpi b{display:block;font:800 clamp(28px,3.4vw,40px)/1.1 "Red Hat Display",sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--soft);font-size:14px}
+.player{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;align-items:center;margin:24px 0 14px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+#play{width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);font-size:18px;cursor:pointer;grid-row:span 2}
+#when{font:800 20px "Red Hat Display",sans-serif;white-space:nowrap}
+#what{color:var(--soft);font-size:15px;margin-left:10px}
+input[type=range]{width:100%;height:32px;accent-color:var(--pa);margin:0}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--soft)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 15px "Red Hat Text",sans-serif;color:var(--soft);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:0 16px;min-height:40px;cursor:pointer}
+.seg button:hover{color:var(--ink);border-color:var(--mute)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--pa);outline-offset:2px}
+#mosaic{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(10px,1.7vw,20px),1fr));gap:3px}
+#mosaic i{aspect-ratio:1;border-radius:3px;transition:opacity .25s}
+#mosaic i.c{border-radius:50%}
+#mosaic i.r{box-shadow:inset 0 0 0 2px var(--bg)}
+#mosaic i.wait{opacity:.07;background:var(--dim)!important;box-shadow:none}
+#mosaic i.pop{animation:pop .45s ease-out both}
+#mosaic i.off{opacity:.12}
+#mosaic.hov i:not(.on):not(.wait){opacity:.18}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.note{font-size:14px;color:var(--mute);margin-top:12px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,56px)}
+.sub{color:var(--soft);font-size:15px;margin-bottom:18px}
+.rows{display:grid;gap:6px}
+.row{display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr) 3.2em;gap:10px;align-items:center;text-decoration:none;padding:4px 6px;border-radius:6px;transition:opacity .3s}
+.row:hover{background:var(--panel)}
+.row.wait{opacity:.25}
+.row .who{font-size:14px;line-height:1.25;color:var(--ink)}
+.row .who small{display:block;color:var(--mute);font-size:13px}
+.bar{height:16px;border-radius:0 4px 4px 0;min-width:2px;transition:width .5s}
+.row .v{font-variant-numeric:tabular-nums;text-align:right;font-weight:700;font-size:15px}
+.stack{display:flex;gap:2px;height:46px;border-radius:6px;overflow:hidden;margin:6px 0 18px;background:var(--line)}
+.stack div{transition:flex-basis .5s}
+.share{display:grid;gap:14px}
+.share div{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:baseline}
+.share i{width:12px;height:12px;border-radius:3px}
+.share b{font:800 22px "Red Hat Display",sans-serif;white-space:nowrap}
+.share small{display:block;color:var(--mute);font-size:13px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:clamp(18px,2.4vw,28px)}
+.big{font:800 clamp(44px,6vw,72px)/1 "Red Hat Display",sans-serif;margin:10px 0 4px;white-space:nowrap}
+.scale{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.fig{position:relative;min-height:300px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{font:13px "Red Hat Text",sans-serif;fill:var(--soft);paint-order:stroke;stroke:var(--panel);stroke-width:4px}
+.people{display:grid;gap:10px;margin-top:20px}
+.prow{display:grid;grid-template-columns:7.5em minmax(0,1fr) auto;gap:12px;align-items:center}
+.prow>span{font-size:14px;color:var(--soft)}
+.prow em{font-style:normal;font-size:14px;color:var(--mute);white-space:nowrap}
+.dots{display:flex;flex-wrap:wrap;gap:6px}
+.dots i{width:20px;height:20px;border-radius:50%;background:var(--dim)}
+.dots i.own{background:var(--ink)}
+.dots i.rep{background:transparent;box-shadow:inset 0 0 0 3px var(--ink)}
+.dots i.nf{background:transparent;box-shadow:inset 0 0 0 1px var(--mute);opacity:.6}
+.plegend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;color:var(--soft);margin-top:16px}
+.plegend i{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px;background:var(--dim)}
+#tip{position:fixed;z-index:9;pointer-events:none;max-width:280px;background:var(--ink);color:var(--bg);border-radius:8px;padding:10px 12px;font-size:14px;line-height:1.35;opacity:0;transition:opacity .12s}
+#tip b{display:block}
+details{margin-top:28px;border-top:1px solid var(--line);padding-top:16px}
+summary{cursor:pointer;color:var(--soft);min-height:44px;display:flex;align-items:center}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--soft);font-weight:500}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+footer{color:var(--mute);font-size:14px}
+@media(max-width:820px){.grid2{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.kpi:last-child{grid-column:1/-1}#what{display:block;margin:2px 0 0}}
+@media(max-width:520px){.row{grid-template-columns:minmax(0,8.5em) minmax(0,1fr) 2.8em}.row .who small{display:none}.prow{grid-template-columns:minmax(0,1fr) auto}.prow .dots{grid-column:1/-1;grid-row:2}.dots i{width:18px;height:18px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+  <h1>MosAIcSOC's first two months on LinkedIn: 572 interactions from 12 posts</h1>
+  <p class="lede">Every public post that mentions the project, with its reactions, comments and reposts, replayed in the order they went out. Press play to watch the mosaic fill in.</p>
+  <div class="kpis">
+    <div class="kpi"><b id="kT">0</b><span>interactions</span></div>
+    <div class="kpi"><b id="kA">0</b><span>reactions</span></div>
+    <div class="kpi"><b id="kR">0</b><span>reposts</span></div>
+    <div class="kpi"><b id="kC">0</b><span>comments</span></div>
+    <div class="kpi"><b id="kI">0</b><span>impressions, estimated</span></div>
+  </div>
+  <div class="player">
+    <button id="play" aria-label="Play the timeline">▶</button>
+    <div><span id="when">Before 8 Oct</span><span id="what">Press play to start</span></div>
+    <input type="range" id="step" min="0" max="12" step="1" value="0" aria-label="Timeline: number of posts shown">
+  </div>
+  <div class="top">
+    <div class="legend">
+      <span><i style="background:var(--bu)"></i>Coordinator (BU)</span>
+      <span><i style="background:var(--pa)"></i>Consortium partners</span>
+      <span><i style="background:var(--ex)"></i>Outside the consortium</span>
+    </div>
+    <div class="seg" id="typeSeg" role="group" aria-label="Show interaction type">
+      <button data-t="all" aria-pressed="true">All</button>
+      <button data-t="a" aria-pressed="false">Reactions</button>
+      <button data-t="r" aria-pressed="false">Reposts</button>
+      <button data-t="c" aria-pressed="false">Comments</button>
+    </div>
+  </div>
+  <div id="mosaic" aria-label="Mosaic of 572 interactions, one tile each, grouped by post"></div>
+  <p class="note">One tile per interaction. Squares are reactions, framed squares are reposts, circles are comments. Hover or tap a tile to see its post. Dates are approximate, as LinkedIn shows only rough ages.</p>
+</div></header>
+
+<section class="band" style="background:var(--panel)"><div class="wrap grid2">
+  <div>
+    <h2>One post carried most of it</h2>
+    <p class="sub">Vasilis's PhD advert drew 357 of the 572 interactions. Select a post to open it on LinkedIn.</p>
+    <div class="seg" id="metricSeg" role="group" aria-label="Measure" style="margin-bottom:16px">
+      <button data-m="t" aria-pressed="true">Total</button>
+      <button data-m="a" aria-pressed="false">Reactions</button>
+      <button data-m="r" aria-pressed="false">Reposts</button>
+      <button data-m="c" aria-pressed="false">Comments</button>
+    </div>
+    <div class="rows" id="bars"></div>
+  </div>
+  <div>
+    <h2>Two thirds came from the coordinator</h2>
+    <p class="sub">Share of <span id="mName">all interactions</span> by who posted, so far in the timeline.</p>
+    <div class="stack" id="stack"></div>
+    <div class="share" id="share"></div>
+    <p class="sub" style="margin-top:22px">Outside the consortium, the project was picked up by the student who won the BU hackathon, the Dorset Innovation Hub newsletter, a PhD candidate sharing the advert and a jobs site listing the postdoc. That is 55 interactions nobody had to ask for.</p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap grid2">
+  <div>
+    <h2>The pre-kick-off month did the heavy lifting</h2>
+    <p class="sub">Interactions added up post by post. Hover the curve to read any date.</p>
+    <div class="fig"><svg id="curve" role="img" aria-label="Cumulative interactions over time"></svg></div>
+  </div>
+  <div class="panel">
+    <h2>About 11,100 feeds reached</h2>
+    <p class="sub">Only a post's author can see its impressions. The hackathon post got 659 impressions from 28 reactions, about 24 per reaction. Move the slider to see the estimate at other rates.</p>
+    <div class="big" id="est">11,100</div>
+    <p style="color:var(--soft)">estimated impressions at <b id="rate">23.5</b> per reaction</p>
+    <input type="range" id="slider" min="10" max="60" step="0.5" value="23.5" aria-label="Impressions per reaction" style="height:44px;margin-top:10px">
+    <div class="scale"><span>10 per reaction</span><span>60 per reaction</span></div>
+  </div>
+</div></section>
+
+<section class="band" style="background:var(--panel)"><div class="wrap">
+  <h2>10 of 84 consortium members have shared it so far</h2>
+  <p class="sub" style="max-width:70ch">Three wrote their own post and seven reposted one. Another 49 have LinkedIn profiles but haven't shared anything about the project yet: the easiest extra reach for the next announcement. One dot per person on the kick-off list; names are left off this public page.</p>
+  <div class="people" id="people"></div>
+  <div class="plegend">
+    <span><i style="background:var(--ink)"></i>Own post</span>
+    <span><i style="background:transparent;box-shadow:inset 0 0 0 3px var(--ink)"></i>Reposted</span>
+    <span><i></i>On LinkedIn, no project posts yet</span>
+    <span><i style="background:transparent;box-shadow:inset 0 0 0 1px var(--mute)"></i>Profile not found or unsure</span>
+  </div>
+  <details>
+    <summary>All 12 posts as a table</summary>
+    <div class="scroll"><table id="tbl"></table></div>
+  </details>
+</div></section>
+<footer class="band"><div class="wrap">Public LinkedIn posts mentioning MosAIcSOC, counted on 23 November 2026. Engagement is each post's total on that day. Impressions are estimated from the one post whose figure is known.</div></footer>
+<div id="tip" role="status"></div>
+
+<script>
+{
+/* Data: edit here to update the page. d = approximate posting date. */
+const P=[
+ {w:"Pascal Garel (HOPE)",g:"pa",a:31,c:0,r:4,d:"2026-10-08",ab:"HOPE at the pre-kick-off in Brussels",u:"https://lnkd.in/p/ey8K7YD4"},
+ {w:"Asfalys",g:"pa",a:33,c:4,r:6,d:"2026-10-10",ab:"The MosAIcSOC journey is getting started",u:"https://lnkd.in/p/efSKsarr"},
+ {w:"Vasilis Katos",g:"bu",a:284,c:13,r:60,d:"2026-10-15",ab:"Fully funded PhD opportunity",u:"https://lnkd.in/p/e3BTgQnZ"},
+ {w:"Yisak seba wakalito",g:"ex",a:9,c:0,r:0,d:"2026-10-20",ab:"Shared the PhD opportunity",u:"https://lnkd.in/p/eBs7Ntru"},
+ {w:"ZELUS",g:"pa",a:28,c:0,r:2,d:"2026-10-22",ab:"Operational cybersecurity and Europe's resilience",u:"https://lnkd.in/p/etNU3eb4"},
+ {w:"ZELUS",g:"pa",a:11,c:0,r:0,d:"2026-11-02",ab:"A modular SOC across sectors",u:"https://lnkd.in/p/eE98gtvk"},
+ {w:"Sarah Chessell",g:"ex",a:15,c:0,r:4,d:"2026-11-09",ab:"Dorset Innovation Hub newsletter",u:"https://lnkd.in/p/efKknQgE"},
+ {w:"Endoscope Ltd",g:"pa",a:6,c:0,r:1,d:"2026-11-09",ab:"A new European collaboration has begun",u:"https://lnkd.in/p/em3Zs-jp"},
+ {w:"Ala Yankouskaya",g:"bu",a:28,c:0,r:4,d:"2026-11-16",ab:"Student hackathon, with Vasilis Katos",u:"https://lnkd.in/p/e2JQHUz8",imp:659},
+ {w:"Ertug Akman",g:"ex",a:23,c:4,r:0,d:"2026-11-16",ab:"Won the Cyber Care Hackathon",u:"https://lnkd.in/p/exmu482s"},
+ {w:"Opportunità",g:"ex",a:0,c:0,r:0,d:"2026-11-16",ab:"Postdoc vacancy at BU",u:"https://lnkd.in/p/eCdtgXXC"},
+ {w:"EYD",g:"pa",a:2,c:0,r:0,d:"2026-11-23",ab:"EYD joins mosAIcSOC",u:"https://lnkd.in/p/e9EVemte"}];
+/* People per partner: o own post, r reposted, n on LinkedIn without project posts, x not found or unsure, - not checked */
+const PE=[["28D","nnnn-"],["Asfalys","rrnnnnx"],["BU","oor"],["CARNET","nnnnxx"],["CILIX","nnxx"],["CYS","nnnnn"],["Endoscope","r"],["EYD","nx"],["HOPE","onxx"],["KBSD","nxxx"],["NCSA","rnnx"],["Siemens","nnn"],["Siemens HC","nnnnnxx"],["Sant'Anna","nnnx"],["Trydent","nnnnnnnxxx"],["TUM","nnnnx"],["Patras","nnnxxxx"],["ZELUS","rrx"]];
+const RATE=659/28;
+P.forEach(p=>{p.t=p.a+p.c+p.r;p.dt=new Date(p.d+"T12:00:00")});
+const G={bu:["Coordinator (BU)","var(--bu)"],pa:["Consortium partners","var(--pa)"],ex:["Outside the consortium","var(--ex)"]};
+const MN={t:"all interactions",a:"reactions",r:"reposts",c:"comments"};
+const fmt=n=>Math.round(n).toLocaleString("en-GB");
+const dfmt=d=>d.toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+const $=id=>document.getElementById(id);
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const tip=$("tip");
+const showTip=(e,html)=>{tip.innerHTML=html;tip.style.opacity=1;const x=Math.max(8,Math.min(e.clientX+14,innerWidth-tip.offsetWidth-8)),y=Math.max(8,Math.min(e.clientY+14,innerHeight-tip.offsetHeight-8));tip.style.left=x+"px";tip.style.top=y+"px"};
+const hideTip=()=>{tip.style.opacity=0};
+const postTip=p=>`<b>${p.w}</b>~${dfmt(p.dt)} · ${p.ab}<br>${p.a} reactions · ${p.r} reposts · ${p.c} comments`;
+let n=0,metric="t",shown={t:0,a:0,r:0,c:0,i:0},timer=null;
+
+/* mosaic: posts in date order */
+const mo=$("mosaic");
+mo.innerHTML=P.map((p,i)=>[["a",p.a],["r",p.r],["c",p.c]].map(([k,c])=>`<i class="${k} wait" data-p="${i}" style="background:${G[p.g][1]}"></i>`.repeat(c)).join("")).join("");
+const tiles=[...mo.children];
+mo.addEventListener("pointerover",e=>{const t=e.target.closest("i");if(!t||t.classList.contains("wait"))return;const i=t.dataset.p;mo.classList.add("hov");tiles.forEach(x=>x.classList.toggle("on",x.dataset.p===i));showTip(e,postTip(P[i]))});
+mo.addEventListener("pointerleave",()=>{mo.classList.remove("hov");hideTip()});
+$("typeSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("typeSeg").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));const t=b.dataset.t;tiles.forEach(x=>x.classList.toggle("off",t!=="all"&&!x.classList.contains(t)))});
+
+/* counters ease toward their targets */
+const count=(id,key,to)=>{const from=shown[key];shown[key]=to;const el=$(id),t0=performance.now(),dur=reduce?0:700;const f=now=>{const k=dur?Math.min(1,(now-t0)/dur):1,v=from+(to-from)*(1-(1-k)**3);el.textContent=(key==="i"&&to?"~":"")+fmt(key==="i"?Math.round(v/100)*100:v);if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+
+/* bars + share */
+const renderBars=()=>{
+ const m=metric,s=P.map((p,i)=>({...p,i})).sort((x,y)=>y[m]-x[m]||y.t-x.t),max=Math.max(1,...P.map(p=>p[m]));
+ $("bars").innerHTML=s.map(p=>{const on=p.i<n;return `<a class="row${on?"":" wait"}" href="${p.u}" target="_blank" rel="noopener"><span class="who">${p.w}<small>${p.ab}</small></span><span><div class="bar" style="width:${on?p[m]/max*100:0}%;background:${G[p.g][1]}"></div></span><span class="v">${on?p[m]:"–"}</span></a>`}).join("");
+ const vis=P.slice(0,n),tot=vis.reduce((s,p)=>s+p[m],0),by=Object.keys(G).map(g=>[g,vis.filter(p=>p.g===g).reduce((s,p)=>s+p[m],0)]);
+ $("mName").textContent=MN[m];
+ $("stack").innerHTML=by.map(([g,v])=>`<div style="flex:0 0 ${tot?`calc(${v/tot*100}% - 2px)`:"0"};background:${G[g][1]}"></div>`).join("");
+ $("share").innerHTML=by.map(([g,v])=>`<div><i style="background:${G[g][1]}"></i><span>${G[g][0]}<small>${fmt(v)} ${m==="t"?"interactions":MN[m]}</small></span><b>${tot?Math.round(v/tot*100):0}%</b></div>`).join("");
+};
+$("metricSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("metricSeg").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));metric=b.dataset.m;renderBars()});
+
+/* cumulative curve */
+const sv=$("curve"),D0=new Date("2026-10-01T00:00:00"),D1=new Date("2026-11-25T00:00:00");
+const cum=[];P.reduce((s,p,i)=>(cum[i]=s+p.t,cum[i]),0);
+const drawCurve=()=>{
+ const W=sv.clientWidth,H=sv.clientHeight,L=44,R=16,T=20,B=30,TOT=cum[cum.length-1];
+ const x=d=>L+(d-D0)/(D1-D0)*(W-L-R),y=v=>T+(1-v/600)*(H-T-B);
+ let path=`M${x(D0)},${y(0)}`;P.forEach((p,i)=>{path+=`H${x(p.dt)}V${y(cum[i])}`});path+=`H${x(D1)}`;
+ const k=n?cum[n-1]:0,kx=n?x(P[n-1].dt):x(D0);
+ const ticks=[0,200,400,600].map(v=>`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`).join("");
+ const months=[["1 Oct","2026-10-01"],["15 Oct","2026-10-15"],["1 Nov","2026-11-01"],["15 Nov","2026-11-15"]].filter((_,i)=>W>=520||i%2===0).map(([l,d])=>`<text x="${x(new Date(d+"T00:00:00"))}" y="${H-8}" text-anchor="middle">${l}</text>`).join("");
+ const ph=P[2],ann=W>=420?`<text x="${x(ph.dt)-10}" y="${(y(cum[1])+y(cum[2]))/2}" text-anchor="end">PhD advert, +${ph.t}</text>`:"";
+ sv.innerHTML=`${ticks}${months}<path d="${path}" fill="none" stroke="var(--line)" stroke-width="2"/><clipPath id="cl"><rect x="0" y="0" width="${kx+1}" height="${H}"/></clipPath><path d="${path}V${y(0)}H${x(D0)}Z" fill="var(--pa)" opacity=".22" clip-path="url(#cl)"/><path d="${path}" fill="none" stroke="var(--pa)" stroke-width="2.5" clip-path="url(#cl)"/>${ann}${n?`<circle cx="${kx}" cy="${y(k)}" r="6" fill="var(--pa)" stroke="var(--panel)" stroke-width="2"/><text x="${Math.min(kx,W-R-40)}" y="${y(k)-14}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${k}</text>`:""}<line id="xh" y1="${T}" y2="${H-B}" stroke="var(--mute)" stroke-dasharray="3 3" opacity="0"/><rect x="${L}" y="0" width="${W-L-R}" height="${H}" fill="transparent" id="hit"/>`;
+ const hit=sv.querySelector("#hit"),xh=sv.querySelector("#xh");
+ hit.addEventListener("pointermove",e=>{const r=sv.getBoundingClientRect(),d=new Date(D0.getTime()+(e.clientX-r.left-L)/(W-L-R)*(D1-D0));let i=-1;P.forEach((p,j)=>{if(p.dt<=d)i=j});xh.setAttribute("x1",e.clientX-r.left);xh.setAttribute("x2",e.clientX-r.left);xh.setAttribute("opacity",1);showTip(e,`<b>${dfmt(d)}</b>${i<0?"No posts yet":fmt(cum[i])+" interactions from "+(i+1)+" post"+(i?"s":"")}`)});
+ hit.addEventListener("pointerleave",()=>{xh.setAttribute("opacity",0);hideTip()});
+};
+const ro=new ResizeObserver(drawCurve);ro.observe(sv);
+
+/* timeline step */
+const go=k=>{
+ const prev=n;n=k;$("step").value=k;
+ tiles.forEach((t,j)=>{const on=+t.dataset.p<n;if(on&&t.classList.contains("wait")){t.classList.remove("wait");if(!reduce){t.classList.add("pop");t.style.animationDelay=Math.min(600,(j%60)*9)+"ms"}}else if(!on){t.classList.add("wait");t.classList.remove("pop")}});
+ const vis=P.slice(0,n),sum=f=>vis.reduce((s,p)=>s+p[f],0);
+ count("kT","t",sum("t"));count("kA","a",sum("a"));count("kR","r",sum("r"));count("kC","c",sum("c"));count("kI","i",sum("a")*RATE);
+ $("when").textContent=n?"~"+dfmt(P[n-1].dt):"Before 8 Oct";
+ $("what").textContent=n?`${P[n-1].w}: ${P[n-1].ab}`+(n===P.length?". All 12 posts.":""):"Press play to start";
+ renderBars();drawCurve();
+};
+const stop=()=>{clearInterval(timer);timer=null;$("play").textContent="▶";$("play").setAttribute("aria-label","Play the timeline")};
+const play=()=>{if(n>=P.length)go(0);$("play").textContent="❚❚";$("play").setAttribute("aria-label","Pause the timeline");timer=setInterval(()=>{if(n>=P.length){stop();return}go(n+1)},900)};
+$("play").addEventListener("click",()=>timer?stop():play());
+$("step").addEventListener("input",e=>{stop();go(+e.target.value)});
+
+/* reach estimate */
+const REACT=P.reduce((s,p)=>s+p.a,0);let rate=RATE;
+const upd=()=>{$("est").textContent=fmt(Math.round(REACT*rate/100)*100);$("rate").textContent=rate.toFixed(1)};
+$("slider").addEventListener("input",e=>{rate=+e.target.value;upd()});upd();
+
+/* people, aggregated per partner */
+const ST={o:["own","wrote a post"],r:["rep","reposted"],n:["","no project posts yet"],x:["nf","profile not found or unsure"],"-":["nf","shared mailbox, not checked"]};
+$("people").innerHTML=PE.map(([org,s])=>{const c=k=>[...s].filter(x=>x===k).length,sh=c("o")+c("r");return `<div class="prow"><span>${org}</span><div class="dots" tabindex="0" data-t="<b>${org}</b>${[..."orxn-"].filter(k=>c(k)).map(k=>c(k)+" "+ST[k][1]).join("<br>")}">${[...s].map(k=>`<i class="${ST[k][0]}"></i>`).join("")}</div><em>${sh} of ${s.length}</em></div>`}).join("");
+const pp=$("people");
+pp.addEventListener("pointerover",e=>{const d=e.target.closest(".dots");if(d)showTip(e,d.dataset.t)});
+pp.addEventListener("pointerleave",hideTip);
+
+/* table */
+$("tbl").innerHTML=`<thead><tr><th>Posted (approx.)</th><th>Author</th><th>What it's about</th><th class="n">Reactions</th><th class="n">Reposts</th><th class="n">Comments</th><th class="n">Impressions</th></tr></thead><tbody>${P.map(p=>`<tr><td style="white-space:nowrap">${dfmt(p.dt)}</td><td><a href="${p.u}" target="_blank" rel="noopener">${p.w}</a></td><td>${p.ab}</td><td class="n">${p.a}</td><td class="n">${p.r}</td><td class="n">${p.c}</td><td class="n">${p.imp?fmt(p.imp):"only author sees"}</td></tr>`).join("")}</tbody>`;
+
+/* start: play once when the page opens, or show the end state */
+if(reduce)go(P.length);else{go(0);setTimeout(play,700)}
+}
+</script>
+</body>
+</html>
