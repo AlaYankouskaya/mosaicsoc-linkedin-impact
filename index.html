@@ -49,7 +49,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 #mosaic i.r{box-shadow:inset 0 0 0 2px var(--bg)}
 #mosaic i.wait{opacity:.07;background:var(--dim)!important;box-shadow:none}
 #mosaic i.pop{animation:pop .45s ease-out backwards}
-#mosaic i.off{opacity:.12}
+#mosaic i.off{display:none}
+#fcap{font:800 18px "Red Hat Display",sans-serif;margin:0 0 10px;min-height:24px}
 #mosaic.hov i:not(.on):not(.wait){opacity:.18}
 @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
 .note{font-size:14px;color:var(--mute);margin-top:12px}
@@ -132,6 +133,7 @@ footer{color:var(--mute);font-size:14px}
       <button data-t="c" aria-pressed="false">Comments</button>
     </div>
   </div>
+  <p id="fcap" aria-live="polite">All 572 interactions</p>
   <div id="mosaic" aria-label="Mosaic of 572 interactions, one tile each, grouped by post"></div>
   <p class="note">One tile per interaction. Squares are reactions, framed squares are reposts, circles are comments. Hover or tap a tile to see its post. Dates are approximate, as LinkedIn shows only rough ages.</p>
 </div></header>
@@ -229,7 +231,7 @@ mo.innerHTML=P.map((p,i)=>[["a",p.a],["r",p.r],["c",p.c]].map(([k,c])=>`<i class
 const tiles=[...mo.children];
 mo.addEventListener("pointerover",e=>{const t=e.target.closest("i");if(!t||t.classList.contains("wait"))return;const i=t.dataset.p;mo.classList.add("hov");tiles.forEach(x=>x.classList.toggle("on",x.dataset.p===i));showTip(e,postTip(P[i]))});
 mo.addEventListener("pointerleave",()=>{mo.classList.remove("hov");hideTip()});
-$("typeSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("typeSeg").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));const t=b.dataset.t;tiles.forEach(x=>x.classList.toggle("off",t!=="all"&&!x.classList.contains(t)))});
+$("typeSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("typeSeg").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));const t=b.dataset.t;tiles.forEach(x=>x.classList.toggle("off",t!=="all"&&!x.classList.contains(t)));const NM={a:"reactions",r:"reposts",c:"comments"},k=t==="all"?null:t,cnt=k?P.reduce((s,p)=>s+p[k],0):572,np=k?P.filter(p=>p[k]>0).length:12;$("fcap").textContent=k?`${cnt} ${NM[k]}, from ${np} of the 12 posts`:"All 572 interactions"});
 
 /* counters ease toward their targets */
 const count=(id,key,to)=>{const from=shown[key];shown[key]=to;const el=$(id),t0=performance.now(),dur=reduce?0:700;const f=now=>{const k=dur?Math.min(1,(now-t0)/dur):1,v=from+(to-from)*(1-(1-k)**3);el.textContent=(key==="i"&&to?"~":"")+fmt(key==="i"?Math.round(v/100)*100:v);if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
